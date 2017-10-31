@@ -1,7 +1,7 @@
 buildscript {
   repositories {
     mavenCentral()
-    maven { url 'https://maven.google.com' }
+    maven { url 'https://maven.google.com/' }
     jcenter()
   }
 
@@ -55,3 +55,7 @@ dependencies {
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
+
+repositories {
+  maven { url 'https://maven.google.com/' }
+}
