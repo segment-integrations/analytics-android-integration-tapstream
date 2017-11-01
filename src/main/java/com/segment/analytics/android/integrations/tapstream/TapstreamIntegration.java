@@ -26,18 +26,21 @@ import static com.segment.analytics.internal.Utils.isNullOrEmpty;
  * @see <a href="https://tapstream.com">Tapstream</a>
  * @see <a href="https://segment.com/docs/integrations/tapstream/">Tapstream Integration</a>
  * @see <a href="https://tapstream.com/developer/android-sdk-documentation/">Tapstream Android
- * SDK</a>
+ *     SDK</a>
  */
 public class TapstreamIntegration extends Integration<Tapstream> {
-  public static final Factory FACTORY = new Factory() {
-    @Override public Integration<?> create(ValueMap settings, Analytics analytics) {
-      return new TapstreamIntegration(analytics, settings);
-    }
+  public static final Factory FACTORY =
+      new Factory() {
+        @Override
+        public Integration<?> create(ValueMap settings, Analytics analytics) {
+          return new TapstreamIntegration(analytics, settings);
+        }
 
-    @Override public String key() {
-      return TAPSTREAM_KEY;
-    }
-  };
+        @Override
+        public String key() {
+          return TAPSTREAM_KEY;
+        }
+      };
 
   private static final String TAPSTREAM_KEY = "Tapstream";
   private static final String VIEWED_EVENT_FORMAT = "Viewed %s Screen";
@@ -45,7 +48,7 @@ public class TapstreamIntegration extends Integration<Tapstream> {
   boolean trackAllPages;
   boolean trackCategorizedPages;
   boolean trackNamedPages;
- final  Tapstream tapstream;
+  final Tapstream tapstream;
   Config config;
   final Logger logger;
 
@@ -56,11 +59,13 @@ public class TapstreamIntegration extends Integration<Tapstream> {
 
     logger = analytics.logger(TAPSTREAM_KEY);
     if (logger.logLevel == INFO || logger.logLevel == VERBOSE) {
-      Logging.setLogger(new com.tapstream.sdk.Logger() {
-        @Override public void log(int logLevel, String msg) {
-          Log.d(TAPSTREAM_KEY, msg);
-        }
-      });
+      Logging.setLogger(
+          new com.tapstream.sdk.Logger() {
+            @Override
+            public void log(int logLevel, String msg) {
+              Log.d(TAPSTREAM_KEY, msg);
+            }
+          });
     }
 
     String accountName = settings.getString("accountName");
@@ -70,17 +75,20 @@ public class TapstreamIntegration extends Integration<Tapstream> {
     tapstream = Tapstream.getInstance();
   }
 
-  @Override public Tapstream getUnderlyingInstance() {
+  @Override
+  public Tapstream getUnderlyingInstance() {
     return tapstream;
   }
 
-  @Override public void track(TrackPayload track) {
+  @Override
+  public void track(TrackPayload track) {
     super.track(track);
 
     fireEvent(track.event(), track.properties());
   }
 
-  @Override public void screen(ScreenPayload screen) {
+  @Override
+  public void screen(ScreenPayload screen) {
     super.screen(screen);
 
     if (trackAllPages) {
@@ -106,7 +114,8 @@ public class TapstreamIntegration extends Integration<Tapstream> {
     tapstream.fireEvent(event);
   }
 
-  @Override public void identify(IdentifyPayload identify) {
+  @Override
+  public void identify(IdentifyPayload identify) {
     super.identify(identify);
     for (Map.Entry<String, Object> entry : identify.traits().entrySet()) {
       config.globalEventParams.put(entry.getKey(), entry.getValue());
