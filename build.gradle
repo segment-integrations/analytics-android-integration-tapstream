@@ -5,10 +5,12 @@ buildscript {
 
   dependencies {
     classpath 'com.android.tools.build:gradle:2.3.0'
+    classpath 'com.f2prateek.javafmt:javafmt:0.1.6'
   }
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'com.f2prateek.javafmt'
 
 android {
   compileSdkVersion 25
